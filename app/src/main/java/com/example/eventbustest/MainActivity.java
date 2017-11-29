@@ -17,19 +17,27 @@ import org.greenrobot.eventbus.ThreadMode;
  * 这里是在同一个活动发送和接收，可以在不同组件键传输活动，并且发送消息的方法没有上下文做参数
  */
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
 
-    //注册由本活动接受消息
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+
+//注册监听上下文，这里是在MainActivity中监听
+    @Override
+    protected void onStart() {
+        super.onStart();
         EventBus.getDefault().register(this);
     }
-//注销注册
+
+//注销监听
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 
